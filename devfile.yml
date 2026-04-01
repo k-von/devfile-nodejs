@@ -23,7 +23,7 @@ components:
     container:
       image: harbor.isd.lacounty.gov/ehr/nodejs-devspaces:latest
       args: ['tail', '-f', '/dev/null']
-      memoryLimit: 3096Mi
+      memoryLimit: 3072Mi
       mountSources: true
       env:
         - name: DEBUG_PORT
