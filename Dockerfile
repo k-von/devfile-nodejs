@@ -7,7 +7,7 @@ USER 0
 # https://github.com/eclipse/che/issues/22524
 ENV SHELL=/usr/bin/bash
 
-RUN chmod +w /
+RUN chmod g+w / /usr/local/lib
 RUN cat <<EOF > /entrypoint.sh
 #!/usr/bin/env bash
 
