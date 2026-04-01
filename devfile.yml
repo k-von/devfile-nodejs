@@ -1,0 +1,70 @@
+schemaVersion: 2.2.2
+metadata:
+  name: nodejs-next-portal
+  displayName: Node.js Runtime
+  description: Node.js 22 application
+  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/node-js.svg
+  tags:
+    - Node.js
+    - ubi9
+    - NextJS
+  projectType: Node.js
+  language: JavaScript
+  version: 2.2.1
+starterProjects:
+  - name: nodejs-next-portal
+    git:
+      checkoutFrom:
+        revision: main
+      remotes:
+        origin: 'git@github.com:k-von/devfile-nodejs.git'
+components:
+  - name: runtime
+    container:
+      image: harbor.isd.lacounty.gov/ehr/nodejs-devspaces:latest
+      args: ['tail', '-f', '/dev/null']
+      memoryLimit: 1024Mi
+      mountSources: true
+      env:
+        - name: DEBUG_PORT
+          value: '5858'
+      endpoints:
+        - name: https-node
+          targetPort: 3000
+          protocol: https
+        - exposure: none
+          name: debug
+          targetPort: 5858
+commands:
+  - id: install
+    exec:
+      component: runtime
+      commandLine: npm install
+      workingDir: ${PROJECT_SOURCE}
+      group:
+        kind: build
+        isDefault: true
+  - id: run
+    exec:
+      component: runtime
+      commandLine: npm start
+      workingDir: ${PROJECT_SOURCE}
+      group:
+        kind: run
+        isDefault: true
+  - id: debug
+    exec:
+      component: runtime
+      commandLine: npm run debug
+      workingDir: ${PROJECT_SOURCE}
+      group:
+        kind: debug
+        isDefault: true
+  - id: test
+    exec:
+      component: runtime
+      commandLine: npm test
+      workingDir: ${PROJECT_SOURCE}
+      group:
+        kind: test
+        isDefault: true
