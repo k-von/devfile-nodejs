@@ -15,12 +15,18 @@ COPY --chown=0:0 entrypoint.sh /
 
 RUN dnf --disableplugin=subscription-manager install -y openssl compat-openssl11 libbrotli nodejs; \
     dnf update -y ; \
+    dnf module enable nodejs:22 ; \
+    dnf install nodejs ; \
     dnf clean all ; \
     mkdir -p ${USER_HOME_DIR} ; \
     mkdir -p ${WORK_DIR} ; \
     chgrp -R 0 /home ; \
     chmod +x /entrypoint.sh ; \
     chmod -R g=u /etc/passwd /etc/group /home ${WORK_DIR}
+
+RUN npm install --global corepack@latest ; \
+corepack enable pnpm ; \
+corepack use pnpm@latest
 
 WORKDIR ${WORK_DIR}
 ENTRYPOINT [ "/entrypoint.sh" ]
