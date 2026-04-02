@@ -24,8 +24,6 @@ then
     echo "${USER_NAME:-user}:x:$(id -u):" >> /etc/group
   fi
 fi
-
-exec "$@"
 EOF
 
 # Set HOME. Required for CRI-o to set /etc/passwd correctly and in general for other CLI tools
