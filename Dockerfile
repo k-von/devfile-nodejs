@@ -13,10 +13,10 @@ ENV BUILDAH_ISOLATION=chroot
 
 COPY --chown=0:0 entrypoint.sh /
 
-RUN dnf --disableplugin=subscription-manager install -y openssl compat-openssl11 libbrotli nodejs; \
+RUN dnf --disableplugin=subscription-manager install -y openssl compat-openssl11 libbrotli; \
     dnf update -y ; \
-    dnf module enable nodejs:22 ; \
-    dnf install nodejs ; \
+    dnf module enable -y nodejs:22 ; \
+    dnf module install -y nodejs:22/common ; \
     dnf clean all ; \
     mkdir -p ${USER_HOME_DIR} ; \
     mkdir -p ${WORK_DIR} ; \
